@@ -26,7 +26,7 @@ $app->register(new RabbitServiceProvider(), [
             'vhost'     => $parameters['rabbitmq']['vhost'],
         ]
     ],
-    'rabbitmq.producers' => [
+    'rabbit.producers' => [
         'scheduler_producer' => [
             'connection'        => 'default',
             'exchange_options'  => [

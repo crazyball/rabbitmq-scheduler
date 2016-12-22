@@ -8,7 +8,7 @@ return [
         'user'          => 'guest',
         'password'      => 'guest',
         'vhost'         => '/',
-        'exchange'      => 'sheduler',
+        'exchange'      => 'scheduler',
         'exchange_type' => 'direct',
     ],
 ];

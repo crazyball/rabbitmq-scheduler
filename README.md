@@ -35,9 +35,11 @@ You can setup planned tasks in `parameters.php` file :
 ```php
 <?php
 
+use Task\Task;
+
 return [
     'tasks' => [
-        Task::create('Name', '0 0 * * *', ['my' => 'message'] 'routing-key'),
+        Task::create('Name', '0 0 * * *', ['my' => 'message'], 'routing-key'),
         Task::create('Name 2', '@daily', ['my' => 'message'], 'routing-key-2'),
     ],
 ];
@@ -58,7 +60,7 @@ return [
         'user'          => 'guest',
         'password'      => 'guest',
         'vhost'         => '/',
-        'exchange'      => 'sheduler',
+        'exchange'      => 'scheduler',
         'exchange_type' => 'direct',
     ],
 ];
