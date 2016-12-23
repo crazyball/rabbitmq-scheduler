@@ -1,5 +1,7 @@
 <?php
 
+use Monolog\Logger;
+
 return [
     'tasks'    => [],
     'rabbitmq' => [
@@ -11,4 +13,8 @@ return [
         'exchange'      => 'scheduler',
         'exchange_type' => 'direct',
     ],
+    'monolog' => [
+        'logfile' => 'var/scheduler.log',
+        'level'   => Logger::INFO,
+    ]
 ];

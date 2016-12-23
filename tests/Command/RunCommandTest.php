@@ -13,6 +13,7 @@ namespace Tests\Command;
 
 use Command\RunCommand;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 use Task\Task;
 
@@ -43,6 +44,31 @@ class RunCommandTest extends \PHPUnit_Framework_TestCase
                 Task::create('Name 2', '1 0 0 * *', ['my' => 'message-2'], 'routing-key-2'),
             ],
             $producer->reveal(),
+            null,
+            new \DateTime('2016-12-15 00:00:00')
+        );
+
+        $tester = new CommandTester($command);
+        $tester->execute([]);
+    }
+
+    public function testWillLogScheduledTasks()
+    {
+        $producer = $this->prophesize(ProducerInterface::class);
+        $logger   = $this->prophesize(LoggerInterface::class);
+
+        $logger
+            ->info('Task "Name" launched')
+            ->shouldBeCalled()
+        ;
+
+        $command = new RunCommand(
+            [
+                Task::create('Name', '0 0 * * *', ['my' => 'message'], 'routing-key'),
+                Task::create('Name 2', '1 0 0 * *', ['my' => 'message-2'], 'routing-key-2'),
+            ],
+            $producer->reveal(),
+            $logger->reveal(),
             new \DateTime('2016-12-15 00:00:00')
         );
 

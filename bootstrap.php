@@ -5,6 +5,7 @@ require_once __DIR__.'/vendor/autoload.php';
 use Command\RunCommand;
 use Knp\Provider\ConsoleServiceProvider;
 use fiunchinho\Silex\Provider\RabbitServiceProvider;
+use Silex\Provider\MonologServiceProvider;
 
 $parameters = require 'parameters.php';
 
@@ -37,9 +38,18 @@ $app->register(new RabbitServiceProvider(), [
     ]
 ]);
 
+if (array_key_exists('monolog', $parameters)) {
+    $app->register(new MonologServiceProvider(), [
+        'monolog.logfile' => $parameters['monolog']['logfile'],
+        'monolog.level'   => $parameters['monolog']['level'],
+        'monolog.name'    => 'rabbitmq-scheduler',
+    ]);
+}
+
 $app['console']->add(new RunCommand(
     $parameters['tasks'],
-    $app['rabbit.producer']['scheduler_producer']
+    $app['rabbit.producer']['scheduler_producer'],
+    $app['monolog'] ?: null
 ));
 
 return $app;
