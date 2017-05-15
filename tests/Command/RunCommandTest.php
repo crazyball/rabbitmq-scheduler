@@ -41,7 +41,7 @@ class RunCommandTest extends \PHPUnit_Framework_TestCase
         $command = new RunCommand(
             [
                 Task::create('Name', '0 0 * * *', ['my' => 'message'], 'routing-key'),
-                Task::create('Name 2', '1 0 0 * *', ['my' => 'message-2'], 'routing-key-2'),
+                Task::create('Name 2', '1 0 1 * *', ['my' => 'message-2'], 'routing-key-2'),
             ],
             $producer->reveal(),
             null,
@@ -65,7 +65,7 @@ class RunCommandTest extends \PHPUnit_Framework_TestCase
         $command = new RunCommand(
             [
                 Task::create('Name', '0 0 * * *', ['my' => 'message'], 'routing-key'),
-                Task::create('Name 2', '1 0 0 * *', ['my' => 'message-2'], 'routing-key-2'),
+                Task::create('Name 2', '1 0 12 * *', ['my' => 'message-2'], 'routing-key-2'),
             ],
             $producer->reveal(),
             $logger->reveal(),

@@ -46,7 +46,6 @@ class RunCommand extends Command
      */
     private $currentDate;
 
-
     /**
      * @param array<Task>          $tasks
      * @param ProducerInterface    $producer

@@ -1,5 +1,5 @@
 .SILENT:
-.PHONY: help install test-unit
+.PHONY: help install test-unit update test-coverage
 
 ENV ?= dev
 
@@ -8,33 +8,14 @@ ifeq ($(ENV), prod)
 	COMPOSER_ARGS=--prefer-dist --classmap-authoritative --optimize-autoloader --no-dev
 endif
 
-
-## Colors
-COLOR_RESET   = \033[0m
-COLOR_INFO    = \033[32m
-COLOR_COMMENT = \033[33m
-
-## Help
-help:
-	printf "${COLOR_COMMENT}Usage:${COLOR_RESET}\n"
-	printf " make [target]\n\n"
-	printf "${COLOR_COMMENT}Available targets:${COLOR_RESET}\n"
-	awk '/^[a-zA-Z\-\_0-9\.@]+:/ { \
-		helpMessage = match(lastLine, /^## (.*)/); \
-		if (helpMessage) { \
-			helpCommand = substr($$1, 0, index($$1, ":")); \
-			helpMessage = substr(lastLine, RSTART + 3, RLENGTH); \
-			printf " ${COLOR_INFO}%-16s${COLOR_RESET} %s\n", helpCommand, helpMessage; \
-		} \
-	} \
-	{ lastLine = $$0 }' $(MAKEFILE_LIST)
+help: ## This help
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 ###########
 # Install #
 ###########
 
-## Install application
-install: parameters.php vendor
+install: parameters.php vendor ## Install application
 
 vendor: composer.lock
 	composer install $(COMPOSER_ARGS)
@@ -45,9 +26,15 @@ composer.lock: composer.json
 parameters.php:
 	cp parameters.php.dist parameters.php
 
+update: ## Update application
+	$(MAKE) --always-make vendor
+
 #########
 # Tests #
 #########
 
-test-unit:
+test-unit: ## Unit tests
 	vendor/bin/phpunit
+
+test-coverage: ## Unit tests
+	vendor/bin/phpunit --coverage-text

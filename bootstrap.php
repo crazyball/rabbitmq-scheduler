@@ -3,7 +3,7 @@
 require_once __DIR__.'/vendor/autoload.php';
 
 use Command\RunCommand;
-use Knp\Provider\ConsoleServiceProvider;
+use Ivoba\Silex\Provider\ConsoleServiceProvider;
 use fiunchinho\Silex\Provider\RabbitServiceProvider;
 use Silex\Provider\MonologServiceProvider;
 
@@ -30,6 +30,7 @@ $app->register(new RabbitServiceProvider(), [
     'rabbit.producers' => [
         'scheduler_producer' => [
             'connection'        => 'default',
+            'auto_setup_fabric' => false,
             'exchange_options'  => [
                 'name' => $parameters['rabbitmq']['exchange'],
                 'type' => $parameters['rabbitmq']['exchange_type'],

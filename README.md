@@ -22,7 +22,9 @@ Add crontab (`crontab -e`)
 
 ## Deploy
 
+```bash
 make install -e ENV=prod
+```
 
 ## Settings
 

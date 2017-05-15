@@ -67,7 +67,7 @@ final class Task
     {
         if (!CronExpression::isValidExpression($schedule)) {
             throw new \InvalidArgumentException(sprintf(
-                'Invalid expression "%s"',
+                'Invalid expression "%s" ',
                 $schedule
             ));
         }
