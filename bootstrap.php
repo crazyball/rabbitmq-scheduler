@@ -7,7 +7,7 @@ use Ivoba\Silex\Provider\ConsoleServiceProvider;
 use fiunchinho\Silex\Provider\RabbitServiceProvider;
 use Silex\Provider\MonologServiceProvider;
 
-$parameters = require 'parameters.php';
+$parameters = require __DIR__.'/config/parameters.php';
 
 $app = new Silex\Application();
 

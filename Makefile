@@ -15,7 +15,7 @@ help: ## This help
 # Install #
 ###########
 
-install: parameters.php vendor ## Install application
+install: config/parameters.php vendor ## Install application
 
 vendor: composer.lock
 	composer install $(COMPOSER_ARGS)
@@ -23,7 +23,7 @@ vendor: composer.lock
 composer.lock: composer.json
 	composer update
 
-parameters.php:
+config/parameters.php:
 	cp parameters.php.dist parameters.php
 
 update: ## Update application
