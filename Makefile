@@ -24,7 +24,7 @@ composer.lock: composer.json
 	composer update
 
 config/parameters.php:
-	cp parameters.php.dist parameters.php
+	cp config/parameters.php.dist config/parameters.php
 
 update: ## Update application
 	$(MAKE) --always-make vendor
